@@ -50,7 +50,10 @@ class ChunkedConnectionWrapper
 end
 
 def quote(value)
-  URI.encode(value)
+  #URI.encode(value)
+  # Need to handle ()[] better, since parsed.path breaks with these characters in the filename when writing an object
+  CGI.escape(value).gsub('+', '%20')
+
 end
 
 class Query

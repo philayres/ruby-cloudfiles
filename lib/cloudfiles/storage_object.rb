@@ -58,7 +58,12 @@ module CloudFiles
     end
 
     def escaped_name
-      @escaped_name ||= escape_name @name
+      #    @escaped_name ||= escape_name @name
+      # The escaped name was being escaped a second time down at the client.rb level (in the quote method) when
+      # writing files. In addition, the quote method did not handle most special characters sufficiently well.
+      # Here we just allow the lower level to do the escaping, avoiding any duplication.
+      # This has only been tested currently when writing an object
+       @escaped_name ||=  @name
     end
 
     # Size of the object (in bytes)

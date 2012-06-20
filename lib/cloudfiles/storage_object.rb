@@ -86,6 +86,11 @@ module CloudFiles
       self.object_metadata[:content_type]
     end
 
+    # This sets the content_type of an existing object with a PUT.
+    # Don't be tempted to try and use this method to set the content type of a new object prior to obj.write
+    # To set the content type for a new, not yet written storage object, set the headers attribute in the write call
+    # with {'Content-Type'=>'mime/type'}
+    # and make sure you use a string for mime/type, not a Mime:Type object 
     def content_type=(type)
       self.copy(:headers => {'Content-Type' => type})
     end

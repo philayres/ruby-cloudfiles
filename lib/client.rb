@@ -497,6 +497,7 @@ public
     conn.start if not conn.started?
 resp = conn.head(parsed.request_uri, {'x-auth-token' => token})
     if resp.code.to_i < 200 or resp.code.to_i > 300
+      Rails.logger.warn("Object HEAD failed with parsed path #{parsed.path}")
       raise ClientException.new('Object HEAD failed', :http_scheme=>parsed.scheme,
                   :http_host=>conn.address, :http_port=>conn.port,
                   :http_path=>parsed.path, :http_status=>resp.code,

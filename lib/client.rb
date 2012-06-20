@@ -489,8 +489,9 @@ public
     
 
     parsed.path += "/#{quote(container)}/#{quote(name)}"
+    Rails.logger.info("Parsed path for #{parsed.path}")
     conn.start if not conn.started?
-    resp = conn.head(parsed.request_uri, {'x-auth-token' => token})
+resp = conn.head(parsed.request_uri, {'x-auth-token' => token})
     if resp.code.to_i < 200 or resp.code.to_i > 300
       raise ClientException.new('Object HEAD failed', :http_scheme=>parsed.scheme,
                   :http_host=>conn.address, :http_port=>conn.port,

@@ -487,9 +487,13 @@ public
     parsed = http_conn[0].clone
     conn = http_conn[1]
     
-
-    parsed.path += "/#{quote(container)}/#{quote(name)}"
-    Rails.logger.info("Parsed path for #{parsed.path}")
+    # Hack to avoid double escaping of filenames
+    # Not tested - yet
+    quoted_name = name
+    quoted_name = quote(name) unless name.include?('%')
+    
+    parsed.path += "/#{quote(container)}/#{quoted_name}"
+    
     conn.start if not conn.started?
 resp = conn.head(parsed.request_uri, {'x-auth-token' => token})
     if resp.code.to_i < 200 or resp.code.to_i > 300

@@ -487,7 +487,7 @@ public
     parsed = http_conn[0].clone
     conn = http_conn[1]
     
-    parsed.path += "/#{quote(container)}/#{quoted_name}"
+    parsed.path += "/#{quote(container)}/#{quote(name)}"
     
     conn.start if not conn.started?
 resp = conn.head(parsed.request_uri, {'x-auth-token' => token})
